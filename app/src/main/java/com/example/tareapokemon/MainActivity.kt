@@ -47,8 +47,13 @@ class MainActivity : AppCompatActivity() {
             Pokemon(i, outPut[i].name, outPut[i].url)
         }
 
+
+
+
         viewManager = LinearLayoutManager(this)
         viewAdapter = PokemonAdapter(pokemon)
+
+
 
 
         pokemon_list.apply {
