@@ -10,8 +10,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import java.net.URL
 import android.provider.Settings.System.getString
+import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import com.example.tareapokemon.models.SetClick
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -37,7 +40,10 @@ class MainActivity : AppCompatActivity() {
                 makeList(outPut)
             }
         }).execute()
+
+
     }
+
 
     fun makeList(outPut: MutableList<Pokemon>) {
 
@@ -47,13 +53,8 @@ class MainActivity : AppCompatActivity() {
             Pokemon(i, outPut[i].name, outPut[i].url)
         }
 
-
-
-
         viewManager = LinearLayoutManager(this)
         viewAdapter = PokemonAdapter(pokemon)
-
-
 
 
         pokemon_list.apply {
@@ -100,6 +101,4 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
-    class DownloadImagen
 }
