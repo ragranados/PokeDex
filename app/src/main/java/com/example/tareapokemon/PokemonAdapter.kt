@@ -55,11 +55,9 @@ class PokemonAdapter(val items: List<Pokemon>) : RecyclerView.Adapter<PokemonAda
             Log.d("prueba:v","https://pokeapi.co/api/v2/pokemon/${itemView.pokemon_name.text}/")
         }
 
-
         fun bind(item: Pokemon) = with(itemView){
             pokemon_name.text = item.name
         }
-
 
     }
 }
