@@ -24,9 +24,11 @@ class ShareActivity : AppCompatActivity() {
         Log.d("prueba:v", "si es esta ${pokemon.name}")
 
         Glide.with(this)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png")
+                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id.toInt()+1}.png")
                 .into(this.image)
-        share_pokemon_weight.text = pokemon.name
+        share_pokemon_name.text = "Name: ${pokemon.name}"
+        share_pokemon_weight.text = "Weight: ${pokemon.url}"
+
     }
 
 
