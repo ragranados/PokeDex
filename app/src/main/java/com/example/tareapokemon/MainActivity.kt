@@ -1,5 +1,6 @@
 package com.example.tareapokemon
 
+import android.content.Intent
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,12 +10,10 @@ import com.example.tareapokemon.models.Pokemon
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import java.net.URL
-import android.provider.Settings.System.getString
 import android.util.Log
-import android.view.View
 import android.widget.TextView
-import android.widget.Toast
-import com.example.tareapokemon.models.SetClick
+import com.example.tareapokemon.Adapters.PokemonAdapter
+import com.example.tareapokemon.Utils.NetworkUtility
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -50,11 +49,13 @@ class MainActivity : AppCompatActivity() {
         lateinit var pokemon: MutableList<Pokemon>
 
         pokemon = MutableList(100) { i ->
-            Pokemon(i, outPut[i].name, outPut[i].url)
+            Pokemon(i.toString(), outPut[i].name, outPut[i].url)
         }
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PokemonAdapter(pokemon)
+        viewAdapter = PokemonAdapter(
+            pokemon,
+            { pokemonItem: Pokemon -> itemClicked(pokemonItem) })
 
 
         pokemon_list.apply {
@@ -62,6 +63,18 @@ class MainActivity : AppCompatActivity() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+    }
+
+    fun itemClicked(pokemon: Pokemon){
+        Log.d("prueba:v","https://pokeapi.co/api/v2/pokemon/${pokemon.name}/")
+
+        var pokemonBundle = Bundle()
+        pokemonBundle.putParcelable("Pokemon",pokemon)
+
+        //var sharePokemon = Intent(this@MainActivity,ShareActivity::class.java).putExtras(pokemonBundle)
+
+        startActivity(Intent(this@MainActivity,ShareActivity::class.java).putExtras(pokemonBundle))
 
     }
 
@@ -92,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             //var prueba : String = JSONObject(pokemonInfo).toString()
 
             var pokemon: MutableList<Pokemon> = MutableList(100) { i ->
-                Pokemon(i, JSONObject(pokemons.getString(i)).getString("name"), JSONObject(pokemons.getString(i)).getString("url"))
+                Pokemon(i.toString(), JSONObject(pokemons.getString(i)).getString("name"), JSONObject(pokemons.getString(i)).getString("url"))
             }
 
             asyncResponse!!.proccesFinish(pokemon)

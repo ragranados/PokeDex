@@ -1,4 +1,4 @@
-package com.example.tareapokemon
+package com.example.tareapokemon.Utils
 
 import android.net.Uri
 import android.view.View
