@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         //var sharePokemon = Intent(this@MainActivity,ShareActivity::class.java).putExtras(pokemonBundle)
 
-        startActivity(Intent(this@MainActivity,ShareActivity::class.java).putExtras(pokemonBundle))
+        startActivity(Intent(this,ShareActivity::class.java).putExtras(pokemonBundle))
 
     }
 
