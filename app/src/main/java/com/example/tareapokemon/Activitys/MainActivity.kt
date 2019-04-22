@@ -1,4 +1,4 @@
-package com.example.tareapokemon
+package com.example.tareapokemon.Activitys
 
 import android.content.Intent
 import android.os.AsyncTask
@@ -13,6 +13,8 @@ import java.net.URL
 import android.util.Log
 import android.widget.TextView
 import com.example.tareapokemon.Adapters.PokemonAdapter
+import com.example.tareapokemon.AsyncResponse
+import com.example.tareapokemon.R
 import com.example.tareapokemon.Utils.NetworkUtility
 import org.json.JSONArray
 import org.json.JSONObject
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         //var sharePokemon = Intent(this@MainActivity,ShareActivity::class.java).putExtras(pokemonBundle)
 
-        startActivity(Intent(this,ShareActivity::class.java).putExtras(pokemonBundle))
+        startActivity(Intent(this, ShareActivity::class.java).putExtras(pokemonBundle))
 
     }
 

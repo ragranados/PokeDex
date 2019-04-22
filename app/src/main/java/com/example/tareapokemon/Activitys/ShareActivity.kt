@@ -1,13 +1,12 @@
-package com.example.tareapokemon
+package com.example.tareapokemon.Activitys
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.bumptech.glide.Glide
+import com.example.tareapokemon.R
 import com.example.tareapokemon.models.Pokemon
 import kotlinx.android.synthetic.main.activity_share.*
-import kotlinx.android.synthetic.main.pokemon_list_item.*
-import kotlinx.android.synthetic.main.pokemon_list_item.view.*
 
 class ShareActivity : AppCompatActivity() {
 
