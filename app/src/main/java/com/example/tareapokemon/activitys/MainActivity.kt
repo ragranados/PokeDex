@@ -52,9 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PokemonAdapter(
-            pokemon,
-            { pokemonItem: Pokemon -> itemClicked(pokemonItem) })
+        viewAdapter = PokemonAdapter(pokemon, { pokemonItem: Pokemon -> itemClicked(pokemonItem) })
 
 
         pokemon_list.apply {

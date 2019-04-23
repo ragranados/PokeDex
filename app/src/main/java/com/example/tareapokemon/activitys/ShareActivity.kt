@@ -20,7 +20,7 @@ class ShareActivity : AppCompatActivity() {
     }
 
     fun initActivity(pokemon: Pokemon){
-        Log.d("prueba:v", "si es esta ${pokemon.name}")
+        //Log.d("prueba:v", "si es esta ${pokemon.name}")
 
         Glide.with(this)
                 .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id.toInt()+1}.png")
