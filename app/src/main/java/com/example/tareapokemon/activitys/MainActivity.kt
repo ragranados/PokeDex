@@ -1,4 +1,4 @@
-package com.example.tareapokemon.Activitys
+package com.example.tareapokemon.activitys
 
 import android.content.Intent
 import android.os.AsyncTask
@@ -12,10 +12,10 @@ import java.io.IOException
 import java.net.URL
 import android.util.Log
 import android.widget.TextView
-import com.example.tareapokemon.Adapters.PokemonAdapter
+import com.example.tareapokemon.adapters.PokemonAdapter
 import com.example.tareapokemon.AsyncResponse
 import com.example.tareapokemon.R
-import com.example.tareapokemon.Utils.NetworkUtility
+import com.example.tareapokemon.utils.NetworkUtility
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -41,10 +41,7 @@ class MainActivity : AppCompatActivity() {
                 makeList(outPut)
             }
         }).execute()
-
-
     }
-
 
     fun makeList(outPut: MutableList<Pokemon>) {
 
@@ -74,8 +71,6 @@ class MainActivity : AppCompatActivity() {
         var pokemonBundle = Bundle()
         pokemonBundle.putParcelable("Pokemon",pokemon)
 
-        //var sharePokemon = Intent(this@MainActivity,ShareActivity::class.java).putExtras(pokemonBundle)
-
         startActivity(Intent(this, ShareActivity::class.java).putExtras(pokemonBundle))
 
     }
@@ -102,9 +97,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onPostExecute(pokemonInfo: String) {
 
-
             var pokemons: JSONArray = JSONObject(pokemonInfo).getJSONArray("results")
-            //var prueba : String = JSONObject(pokemonInfo).toString()
 
             var pokemon: MutableList<Pokemon> = MutableList(100) { i ->
                 Pokemon(i.toString(), JSONObject(pokemons.getString(i)).getString("name"), JSONObject(pokemons.getString(i)).getString("url"))

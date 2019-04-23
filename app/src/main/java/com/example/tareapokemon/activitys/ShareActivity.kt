@@ -1,4 +1,4 @@
-package com.example.tareapokemon.Activitys
+package com.example.tareapokemon.activitys
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -29,6 +29,5 @@ class ShareActivity : AppCompatActivity() {
         share_pokemon_weight.text = "Weight: ${pokemon.url}"
 
     }
-
 
 }

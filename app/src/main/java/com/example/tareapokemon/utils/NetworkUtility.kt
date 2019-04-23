@@ -1,7 +1,6 @@
-package com.example.tareapokemon.Utils
+package com.example.tareapokemon.utils
 
 import android.net.Uri
-import android.view.View
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.MalformedURLException

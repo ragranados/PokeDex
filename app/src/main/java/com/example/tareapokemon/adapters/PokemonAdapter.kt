@@ -1,4 +1,4 @@
-package com.example.tareapokemon.Adapters
+package com.example.tareapokemon.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -43,14 +43,6 @@ class PokemonAdapter(val items: List<Pokemon>, val clickListener: (Pokemon) -> U
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        /*var urlIn: String
-        init{
-            itemView.setOnClickListener(this)
-
-        }
-        override fun onClick(v: View?) {
-            Log.d("prueba:v","https://pokeapi.co/api/v2/pokemon/${itemView.pokemon_name.text}/")
-        }*/
 
         fun bind(item: Pokemon,clickListener: (Pokemon) -> Unit) = with(itemView){
             pokemon_name.text = item.name
