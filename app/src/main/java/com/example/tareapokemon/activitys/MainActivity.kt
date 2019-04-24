@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.example.tareapokemon.models.Pokemon
@@ -22,8 +23,8 @@ import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
-
-    private lateinit var pruebaView: TextView
+    lateinit var pokemon: MutableList<Pokemon>
+    //private lateinit var pruebaView: TextView
     var viewAdapter: RecyclerView.Adapter<*>? = null
     private lateinit var viewManager: RecyclerView.LayoutManager
 
@@ -31,28 +32,65 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        pruebaView = prueba
-        init()
+        //pruebaView = prueba
+
+        if(savedInstanceState!=null){
+            pokemon = savedInstanceState.getParcelableArrayList("list")
+            setUpView(pokemon)
+        }else{
+            init()
+        }
+
+
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+
+        var list: ArrayList<Pokemon> = ArrayList()
+        list.addAll(pokemon.toList())
+        outState.putParcelableArrayList("list",list)
+        super.onSaveInstanceState(outState)
+
     }
 
     fun init() {
-        var pokemons = FetchPokemonTask(object : AsyncResponse {
+
+        FetchPokemonTask(object : AsyncResponse {
             override fun proccesFinish(outPut: MutableList<Pokemon>) {
+                Log.d("pruebaejec","se ejecuta XD")
                 makeList(outPut)
             }
         }).execute()
+
     }
 
     fun makeList(outPut: MutableList<Pokemon>) {
 
-        lateinit var pokemon: MutableList<Pokemon>
+        //lateinit var pokemon: MutableList<Pokemon>
 
         pokemon = MutableList(100) { i ->
             Pokemon(i.toString(), outPut[i].name, outPut[i].url)
         }
 
+        /*viewManager = LinearLayoutManager(this)
+        viewAdapter = PokemonAdapter(pokemon, { pokemonItem: Pokemon -> itemClickedPortrait(pokemonItem) })
+
+
+        pokemon_list.apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }*/
+
+        setUpView(pokemon)
+
+    }
+
+    fun setUpView(pokemon: MutableList<Pokemon>){
+
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PokemonAdapter(pokemon, { pokemonItem: Pokemon -> itemClicked(pokemonItem) })
+        viewAdapter = PokemonAdapter(pokemon, { pokemonItem: Pokemon -> itemClickedPortrait(pokemonItem) })
 
 
         pokemon_list.apply {
@@ -60,16 +98,19 @@ class MainActivity : AppCompatActivity() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
-
     }
 
-    fun itemClicked(pokemon: Pokemon){
+    fun itemClickedPortrait(pokemon: Pokemon){
         Log.d("prueba:v","https://pokeapi.co/api/v2/pokemon/${pokemon.name}/")
 
         var pokemonBundle = Bundle()
         pokemonBundle.putParcelable("Pokemon",pokemon)
 
         startActivity(Intent(this, ShareActivity::class.java).putExtras(pokemonBundle))
+
+    }
+
+    fun itemClickedLandscape(pokemon: Pokemon){
 
     }
 
