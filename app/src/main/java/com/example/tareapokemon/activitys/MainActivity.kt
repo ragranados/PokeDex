@@ -24,7 +24,6 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
 
     lateinit var pokemon: MutableList<Pokemon>
-    //private lateinit var pruebaView: TextView
     var viewAdapter: RecyclerView.Adapter<*>? = null
     private lateinit var viewManager: RecyclerView.LayoutManager
 
@@ -32,7 +31,6 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //pruebaView = prueba
 
         if(savedInstanceState!=null){
             pokemon = savedInstanceState.getParcelableArrayList("list")
