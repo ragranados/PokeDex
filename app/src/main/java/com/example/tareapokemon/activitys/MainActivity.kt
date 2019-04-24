@@ -40,9 +40,6 @@ class MainActivity : AppCompatActivity() {
         }else{
             init()
         }
-
-
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -67,22 +64,9 @@ class MainActivity : AppCompatActivity() {
 
     fun makeList(outPut: MutableList<Pokemon>) {
 
-        //lateinit var pokemon: MutableList<Pokemon>
-
         pokemon = MutableList(100) { i ->
             Pokemon(i.toString(), outPut[i].name, outPut[i].url)
         }
-
-        /*viewManager = LinearLayoutManager(this)
-        viewAdapter = PokemonAdapter(pokemon, { pokemonItem: Pokemon -> itemClickedPortrait(pokemonItem) })
-
-
-        pokemon_list.apply {
-            setHasFixedSize(true)
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }*/
-
         setUpView(pokemon)
 
     }
@@ -145,7 +129,5 @@ class MainActivity : AppCompatActivity() {
             asyncResponse!!.proccesFinish(pokemon)
 
         }
-
-
     }
 }
