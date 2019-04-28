@@ -1,6 +1,7 @@
 package com.example.tareapokemon.activitys
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -72,7 +73,13 @@ class MainActivity : AppCompatActivity() {
     fun setUpView(pokemon: MutableList<Pokemon>){
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PokemonAdapter(pokemon, { pokemonItem: Pokemon -> itemClickedPortrait(pokemonItem) })
+        //viewAdapter = PokemonAdapter(pokemon, { pokemonItem: Pokemon -> itemClickedPortrait(pokemonItem) })
+
+        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            viewAdapter = PokemonAdapter(pokemon, { pokemonItem: Pokemon -> itemClickedPortrait(pokemonItem) })
+        }else{
+            viewAdapter = PokemonAdapter(pokemon, { pokemonItem: Pokemon -> itemClickedLandscape(pokemonItem) })
+        }
 
 
         pokemon_list.apply {
