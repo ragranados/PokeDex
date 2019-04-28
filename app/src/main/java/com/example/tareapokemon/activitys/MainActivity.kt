@@ -6,6 +6,7 @@ import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.example.tareapokemon.models.Pokemon
@@ -17,6 +18,7 @@ import android.widget.TextView
 import com.example.tareapokemon.adapters.PokemonAdapter
 import com.example.tareapokemon.AsyncResponse
 import com.example.tareapokemon.R
+import com.example.tareapokemon.fragments.LandPokemonContent
 import com.example.tareapokemon.utils.NetworkUtility
 import org.json.JSONArray
 import org.json.JSONObject
@@ -78,7 +80,9 @@ class MainActivity : AppCompatActivity() {
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
             viewAdapter = PokemonAdapter(pokemon, { pokemonItem: Pokemon -> itemClickedPortrait(pokemonItem) })
         }else{
+            var contentFragmet : LandPokemonContent =LandPokemonContent.newInstance(Pokemon())
             viewAdapter = PokemonAdapter(pokemon, { pokemonItem: Pokemon -> itemClickedLandscape(pokemonItem) })
+            changeFragment(R.id.land_pokemon_detail, contentFragmet)
         }
 
 
@@ -100,8 +104,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun itemClickedLandscape(pokemon: Pokemon){
+        var contentFragmet : LandPokemonContent =LandPokemonContent.newInstance(pokemon)
+        changeFragment(R.id.land_pokemon_detail, contentFragmet)
 
     }
+
+    private fun changeFragment(id: Int, frag: Fragment){ supportFragmentManager.beginTransaction().replace(id, frag).commit() }
 
     class FetchPokemonTask(var asyncResponseOut: AsyncResponse? = null) : AsyncTask<String, Void, String>() {
 
