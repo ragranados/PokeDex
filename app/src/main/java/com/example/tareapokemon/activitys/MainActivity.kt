@@ -55,12 +55,21 @@ class MainActivity : AppCompatActivity() {
     fun init() {
 
         FetchPokemonTask(object : AsyncResponse {
-            override fun proccesFinish(outPut: MutableList<Pokemon>) {
+            override fun proccesFinish(outPut: String?){
                 Log.d("pruebaejec","se ejecuta XD")
-                makeList(outPut)
+                makeList(getPokemonMutableList(outPut))
             }
         }).execute()
 
+    }
+
+    fun getPokemonMutableList(outPut: String?): MutableList<Pokemon>{
+        var pokemons: JSONArray = JSONObject(outPut).getJSONArray("results")
+        var pokemon: MutableList<Pokemon> = MutableList(100) { i ->
+            Pokemon(i.toString(), JSONObject(pokemons.getString(i)).getString("name"), JSONObject(pokemons.getString(i)).getString("url"))
+        }
+
+        return pokemon
     }
 
     fun makeList(outPut: MutableList<Pokemon>) {
@@ -121,8 +130,10 @@ class MainActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg params: String?): String? {
 
-            val pokeAPI: URL = NetworkUtility().buildUrl()
+            val BASE_URL = "https://pokeapi.co/api/v2/"
+            val URL_ALL  = "pokemon/?offset=0&limit=100"
 
+            val pokeAPI: URL = NetworkUtility().buildUrl(BASE_URL+URL_ALL)
             try {
                 return NetworkUtility().getResponseFromHttpUrl(pokeAPI)
             } catch (e: IOException) {
@@ -132,14 +143,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onPostExecute(pokemonInfo: String) {
-
-            var pokemons: JSONArray = JSONObject(pokemonInfo).getJSONArray("results")
-
+            /*var pokemons: JSONArray = JSONObject(pokemonInfo).getJSONArray("results")
             var pokemon: MutableList<Pokemon> = MutableList(100) { i ->
                 Pokemon(i.toString(), JSONObject(pokemons.getString(i)).getString("name"), JSONObject(pokemons.getString(i)).getString("url"))
-            }
+            }*/
 
-            asyncResponse!!.proccesFinish(pokemon)
+            asyncResponse!!.proccesFinish(pokemonInfo)
 
         }
     }

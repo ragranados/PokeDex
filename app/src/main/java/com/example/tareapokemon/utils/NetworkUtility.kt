@@ -1,6 +1,7 @@
 package com.example.tareapokemon.utils
 
 import android.net.Uri
+import android.os.Bundle
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
@@ -14,8 +15,8 @@ class NetworkUtility(){
 
     val URL_ALL: String = "pokemon/?offset=0&limit=100"
 
-    fun buildUrl(): URL {
-        val builtUri = Uri.parse(BASE_URL+URL_ALL)
+    fun buildUrl(externalUrl: String?): URL {
+        val builtUri = Uri.parse(externalUrl)
             /*.buildUpon()
             .appendPath(URL)
             .build()*/
