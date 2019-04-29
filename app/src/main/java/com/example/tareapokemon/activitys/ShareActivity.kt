@@ -2,9 +2,11 @@ package com.example.tareapokemon.activitys
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.util.Log
 import com.bumptech.glide.Glide
 import com.example.tareapokemon.R
+import com.example.tareapokemon.fragments.LandPokemonContent
 import com.example.tareapokemon.models.Pokemon
 import kotlinx.android.synthetic.main.activity_share.*
 
@@ -20,14 +22,12 @@ class ShareActivity : AppCompatActivity() {
     }
 
     fun initActivity(pokemon: Pokemon){
-        //Log.d("prueba:v", "si es esta ${pokemon.name}")
-
-        Glide.with(this)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id.toInt()+1}.png")
-                .into(this.image)
-        share_pokemon_name.text = "Name: ${pokemon.name}"
-        share_pokemon_weight.text = "Weight: ${pokemon.url}"
+        var contentFragmet : LandPokemonContent = LandPokemonContent.newInstance(pokemon)
+        changeFragment(R.id.content, contentFragmet)
+        Log.d("fin","fin")
 
     }
+
+    private fun changeFragment(id: Int, frag: Fragment){ supportFragmentManager.beginTransaction().replace(id, frag).commit() }
 
 }
