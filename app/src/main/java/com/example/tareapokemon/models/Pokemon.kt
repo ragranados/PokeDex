@@ -3,13 +3,14 @@ package com.example.tareapokemon.models
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Pokemon(val id: String = "0",val name: String = "N/A",val url: String = "N/A"): Parcelable {
+data class Pokemon(val id: String = "0",
+                   val name: String = "N/A",
+                   val url: String = "N/A") : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    ) {
-    }
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString()
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)

@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.tareapokemon.AsyncResponse
 
 import com.example.tareapokemon.R
+import com.example.tareapokemon.activitys.MainActivity
 import com.example.tareapokemon.models.Pokemon
 import com.example.tareapokemon.utils.NetworkUtility
 import kotlinx.android.synthetic.main.fragment_land_pokemon_content.*
@@ -26,30 +28,36 @@ import java.net.URL
 class LandPokemonContent : Fragment() {
     // TODO: Rename and change types of parameters
     private var pokemon = Pokemon()
-
+    lateinit var fragmentView: View
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_land_pokemon_content, container, false)
 
-        bindData(view)
+        fragmentView = view
 
         initFragment()
         return view
     }
 
     fun initFragment(){
-
+        FetchPokemonInfoTask(object : AsyncResponse {
+            override fun proccesFinish(outPut: String?) {
+                bindData(outPut)
+            }
+        }).execute(pokemon.id)
     }
 
-    fun bindData(view: View){
+    fun bindData(outPut: String?){
 
-        Glide.with(this)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id.toInt()+1}.png")
-                .into(view.land_image)
-        view.land_pokemon_name.text = pokemon.name
-        view.land_pokemon_weight.text = pokemon.url
+        if(isAdded){
+            Glide.with(this)
+                    .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id.toInt()+1}.png")
+                    .into(fragmentView.land_image)
+            fragmentView.land_pokemon_name.text = JSONObject(outPut).getJSONArray("forms").getJSONObject(0).getString("name")
+            fragmentView.land_pokemon_weight.text = "Weight: "+ "\t"+JSONObject(outPut).getString("weight")
+        }
     }
 
     companion object {
@@ -65,7 +73,9 @@ class LandPokemonContent : Fragment() {
 
 
 
-    /*class FetchPokemonTask(var asyncResponseOut: AsyncResponse? = null) : AsyncTask<String, Void, String>() {
+
+
+    class FetchPokemonInfoTask(var asyncResponseOut: AsyncResponse? = null) : AsyncTask<String, Void, String>() {
 
         var asyncResponse: AsyncResponse? = null
 
@@ -74,7 +84,9 @@ class LandPokemonContent : Fragment() {
         }
 
         override fun doInBackground(vararg params: String?): String? {
-            val pokeAPI: URL = NetworkUtility().buildUrl(params[0])
+
+            val id :String? = params[0]
+            val pokeAPI: URL = NetworkUtility().buildUrl("https://pokeapi.co/api/v2/pokemon/${id?.toInt()?.plus(1)}/")
             try {
                 return NetworkUtility().getResponseFromHttpUrl(pokeAPI)
             } catch (e: IOException) {
@@ -84,13 +96,9 @@ class LandPokemonContent : Fragment() {
         }
 
         override fun onPostExecute(pokemonInfo: String) {
-            var pokemons: JSONArray = JSONObject(pokemonInfo).getJSONArray("results")
-            var pokemon: MutableList<Pokemon> = MutableList(100) { i ->
-                Pokemon(i.toString(), JSONObject(pokemons.getString(i)).getString("name"), JSONObject(pokemons.getString(i)).getString("url"))
-            }
 
-            asyncResponse!!.proccesFinish(pokemon)
+            asyncResponse!!.proccesFinish(pokemonInfo)
 
         }
-    }*/
+    }
 }

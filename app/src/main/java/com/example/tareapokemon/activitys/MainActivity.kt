@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
             override fun proccesFinish(outPut: String?){
                 Log.d("pruebaejec","se ejecuta XD")
                 makeList(getPokemonMutableList(outPut))
+                setUpView(getPokemonMutableList(outPut))
             }
         }).execute()
 

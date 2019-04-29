@@ -48,6 +48,7 @@ class NetworkUtility(){
                 return null
             }
         } finally {
+
             urlConnection.disconnect()
         }
     }
